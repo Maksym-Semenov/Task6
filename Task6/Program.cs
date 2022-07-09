@@ -7,7 +7,7 @@ namespace Task6
     internal class Program
     {
         public static int Div(int a, int b) { return a / b; }
-        public static Queue<int> ReadNumber(int startRange, int finishRange)
+        public static int ReadNumber(int startRange, int finishRange)
         {
             Queue<int> queue = new Queue<int>();
             queue.Enqueue(startRange);
@@ -15,24 +15,26 @@ namespace Task6
                 bool succeess = int.TryParse(Console.ReadLine(), out int currentValue);
             try 
             {
-                if (currentValue > startRange && currentValue < finishRange)
+                if (currentValue > startRange && currentValue < finishRange )
                 {
+
                     queue.Enqueue(currentValue);
                     if (queue.Count > 10)
-                        Console.WriteLine(queue);
-                    goto secondStep;
+                        goto secondStep;
+                    else
+                        goto firstStep;
                 }
                 else
                 {
                     throw new Exception("It's wrong!");
                 }
-                goto firstStep;
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                goto firstStep;
             }
-        secondStep:    return queue;
+        secondStep:    return currentValue;
         }
         static void Main(string[] args)
         {
@@ -78,8 +80,11 @@ namespace Task6
             int startRange = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter finish value: \t");
             int finishRange = Convert.ToInt32(Console.ReadLine());
-            Queue<int> result2 = ReadNumber(startRange, finishRange);
-            Console.WriteLine(result2);
+            int result2 = ReadNumber(startRange, finishRange);
+            Queue <int> queue = new Queue< int>();
+            queue.Enqueue(result2);
+            Console.WriteLine(queue);
+            Console.ReadLine();
         }
     }
 }
