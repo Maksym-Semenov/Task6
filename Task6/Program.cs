@@ -7,34 +7,35 @@ namespace Task6
     internal class Program
     {
         public static int Div(int a, int b) { return a / b; }
-        public static int ReadNumber(int startRange, int finishRange)
-        {
-            Queue<int> queue = new Queue<int>();
-            queue.Enqueue(startRange);
-        firstStep:    Console.WriteLine("Enter current value");
-                bool succeess = int.TryParse(Console.ReadLine(), out int currentValue);
-            try 
-            {
-                if (currentValue > startRange && currentValue < finishRange )
-                {
 
-                    queue.Enqueue(currentValue);
-                    if (queue.Count > 10)
-                        goto secondStep;
-                    else
-                        goto firstStep;
+        public static List<int> ReadNumber(int startRange, int finishRange)
+        {
+            List<int> list = new List<int>(10);
+            list.Add(startRange);
+            int count = 0;
+            try
+            {
+            firstStep:
+                Console.WriteLine("Enter current value");
+                bool succeess = int.TryParse(Console.ReadLine(), out int currentValue);
+                if (count < 10 && currentValue > startRange && currentValue < finishRange && currentValue > list[count])
+                {
+                    list.Add(currentValue);
+                    count++;
+                    goto firstStep;
+                }
+                else if (count > 10)
+                {
+                    return list;
                 }
                 else
-                {
-                    throw new Exception("It's wrong!");
-                }
+                    throw new Exception("It's wrong value");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                goto firstStep;
             }
-        secondStep:    return currentValue;
+            return list;
         }
         static void Main(string[] args)
         {
@@ -80,10 +81,8 @@ namespace Task6
             int startRange = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter finish value: \t");
             int finishRange = Convert.ToInt32(Console.ReadLine());
-            int result2 = ReadNumber(startRange, finishRange);
-            Queue <int> queue = new Queue< int>();
-            queue.Enqueue(result2);
-            Console.WriteLine(queue);
+            List<int> result = ReadNumber(startRange, finishRange);
+            Console.WriteLine(result);
             Console.ReadLine();
         }
     }
